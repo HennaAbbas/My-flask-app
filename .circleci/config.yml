@@ -10,23 +10,28 @@ jobs:
     steps:
       - checkout
       
+      
       - run:
           name: Install Dependencies
           command: |
             python -m pip install --upgrade pip
-            pip install -r requirements.txt
-      
+            pip install -r requirements.txt  # Install application dependencies
+
       - run:
           name: Run Tests
           command: |
-            pytest tests/
-    
-      - snyk/scan
-      
+            pip install pytest  # Install pytest for testing
+            pytest tests/  # Run tests
+
       - run:
           name: Create Docker Image
           command: |
-            docker build -t my-app:latest .
+            docker build -t my-flask-app:latest .  # Build the Docker image
+
+    
+      - snyk/scan
+      
+
 
       - run:
           name: Push to JFrog
